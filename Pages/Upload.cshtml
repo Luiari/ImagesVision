@@ -1,0 +1,57 @@
+﻿@page
+@model ImageVision.Controllers.UploadImageModel
+@{
+    ViewData["Title"] = "Upload Image";
+}
+
+<div>
+    <h3>Upload an Image</h3>
+    <form method="post" enctype="multipart/form-data">
+        <input type="file" name="imageFile" accept="image/*">
+        <button type="submit">Upload</button>
+    </form>
+</div>
+
+<div>
+    <h3>Image Analysis Results</h3>
+    @if (!string.IsNullOrEmpty(Model.AnalysisResult.ImageUrl))
+    {
+        <img src="@Model.AnalysisResult.ImageUrl" alt="Uploaded Image" width="300">
+        <p>Description: @Model.AnalysisResult.Description</p>
+        <ul>
+            @foreach (var tag in Model.AnalysisResult.Tags ?? new List<string>())
+            {
+                <li>@tag</li>
+
+            }
+        </ul>
+        <h4>Categories:</h4>
+        <ul>
+            @foreach (var category in Model.AnalysisResult.Categories ?? new List<string>())
+            {
+                <li>@category</li>
+            }
+        </ul>
+
+        <h4>Objects:</h4>
+        <ul>
+            @foreach (var obj in Model.AnalysisResult.Objects ?? new List<string>())
+            {
+                <li>@obj</li>
+            }
+        </ul>
+
+        <h4>Adult Content:</h4>
+        <ul>
+            @foreach (var adultInfo in Model.AnalysisResult.Adult ?? new List<string>())
+            {
+                <li>@adultInfo</li>
+            }
+        </ul>
+         
+    }
+    else
+    {
+        <p>No analysis results available.</p>
+    }
+</div>
